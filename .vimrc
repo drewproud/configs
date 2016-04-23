@@ -1,3 +1,6 @@
+" Vundle
+" ------------------------------------------- "
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -38,20 +41,44 @@ filetype plugin indent on    " required
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
 
-" PLUGINS
-Plugin 'scrooloose/nerdtree'
+" Plugins
+" ------------------------------------------- "
+
+" map leader key here in case i use it in plugins?
+" not sure if this matters
+let mapleader=" "
+
+" Sublime style multiple cursors
+Plugin 'mhinz/vim-startify'
+
+Plugin 'wesQ3/vim-windowswap'
+
+Plugin 'tpope/vim-sensible'
+
 Plugin 'pangloss/vim-javascript'
+
+" HTML syntax highlighting
+Plugin 'Valloric/MatchTagAlways'
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'javascript' : 1,
+    \}
+
+Plugin 'alvan/vim-closetag'
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.jsx"
 
 Plugin 'othree/javascript-libraries-syntax.vim'
 let g:used_javascript_libs = 'underscore,jquery'
 
 Bundle 'mxw/vim-jsx'
+
 Plugin 'Valloric/YouCompleteMe'
+
 Plugin 'ternjs/tern_for_vim'
 
 Plugin 'scrooloose/syntastic'
@@ -65,28 +92,51 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 
 Plugin 'Raimondi/delimitMate'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'dkprice/vim-easygrep'
-Plugin 'scrooloose/nerdcommenter'
 
-" DREW'S STUFF
-let mapleader=" "
+" similar to command p is ST
+Plugin 'ctrlpvim/ctrlp.vim'
+map <leader>gf :CtrlPClearAllCaches<cr> :CtrlP features_wip<cr>
+
+" faster searching
+Plugin 'dkprice/vim-easygrep'
+
+" NERDCommenter
+" comment and uncomment with command + /
+let g:NERDCustomDelimiter = { 'javascript': { 'left': '// ', 'leftAlt': '/*', 'rightAlt': '*/' }}
+Plugin 'scrooloose/nerdcommenter'
+nnoremap <D-/> :call NERDComment(0,"toggle")<CR>
+vnoremap <D-/> :call NERDComment(0,"toggle")<CR>
+inoremap <D-/> :call NERDComment(0,"toggle")<CR>
+
+Plugin 'scrooloose/nerdtree'
+nnoremap <C-b> :NERDTreeToggle<CR>
+
+Plugin 'terryma/vim-multiple-cursors'
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+" Drew's stuff
+" ------------------------------------------- "
+
+" line numbers
+set number
 
 " tabs
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
+"set tabstop=2
+"set shiftwidth=2
+"set softtabstop=2
+"set expandtab
 
 " fix backspace to work like normal editor
 set backspace=indent,eol,start
 
 " ignore in search
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
-set wildchar=<Tab> wildmenu wildmode=full
+let g:ctrlp_max_files = 0
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,/\.meteor/
 
-" line numbers
-set number
+set wildchar=<Tab> wildmenu wildmode=full
 
 " better escape
 inoremap jj <Esc>
@@ -101,13 +151,12 @@ nnoremap <C-l> <C-w>l
 " shift-enter to leave insert mode
 inoremap <S-CR> <Esc>
 
-" NERDTree toggle
-map <C-n> :NERDTreeToggle<CR>
-
-" NERDCommenter
-nnoremap <D-/> :call NERDComment(0,"toggle")<CR>
-vnoremap <D-/> :call NERDComment(0,"toggle")<CR>
-inoremap <D-/> :call NERDComment(0,"toggle")<CR>
+" tab width
+set expandtab
+set smarttab
+set tabstop=8 softtabstop=0 shiftwidth=2
+command! Tab4 set tabstop=8 softtabstop=0 shiftwidth=4
+command! Tab2 set tabstop=8 softtabstop=0 shiftwidth=2
 
 " check file change every 4 seconds ('CursorHold') and reload the buffer upon detecting change
 set autoread
@@ -116,6 +165,8 @@ au CursorHold * checktime
 syntax on
 colorscheme monokai
 
+" Commands
+" ------------------------------------------- "
 " important commands
 " ZZ -> close window
 " ctrl-w, HJKL -> change window focus
@@ -124,4 +175,5 @@ colorscheme monokai
 " :bd delete buffer
 " :hide -> hides current window
 " :on closes all windows but current
+" <C-i> move to last jump position <C-o> move forward a jump position
 

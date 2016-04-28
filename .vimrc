@@ -77,9 +77,18 @@ let g:used_javascript_libs = 'underscore,jquery'
 
 Bundle 'mxw/vim-jsx'
 
+" make sure to run ~/.vim/bundle/YouCompleteMe/install.py --tern-completer
+" after intitial PluginInstall
 Plugin 'Valloric/YouCompleteMe'
+let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_add_preview_to_completeopt = 0
+"set completeopt-=preview
+"let g:ycm_min_num_of_chars_for_completion = 1
+"let g:ycm_register_as_syntastic_checker = 0
 
 Plugin 'ternjs/tern_for_vim'
+nnoremap <Leader>j :TernDef<CR>
+nnoremap <Leader>J :TernDefSplit<CR>
 
 Plugin 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
@@ -134,7 +143,7 @@ set backspace=indent,eol,start
 
 " ignore in search
 let g:ctrlp_max_files = 0
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,/\.meteor/
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*
 
 set wildchar=<Tab> wildmenu wildmode=full
 

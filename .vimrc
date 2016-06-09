@@ -30,6 +30,24 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+" Drew's plugins
+Plugin 'mhinz/vim-startify'
+Plugin 'wesQ3/vim-windowswap'
+Plugin 'tpope/vim-sensible'
+Plugin 'pangloss/vim-javascript'
+Plugin 'Valloric/MatchTagAlways'
+Plugin 'alvan/vim-closetag'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ternjs/tern_for_vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'Raimondi/delimitMate'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'dkprice/vim-easygrep'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'terryma/vim-multiple-cursors'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -51,16 +69,8 @@ filetype plugin indent on    " required
 let mapleader=" "
 
 " Sublime style multiple cursors
-Plugin 'mhinz/vim-startify'
-
-Plugin 'wesQ3/vim-windowswap'
-
-Plugin 'tpope/vim-sensible'
-
-Plugin 'pangloss/vim-javascript'
 
 " HTML syntax highlighting
-Plugin 'Valloric/MatchTagAlways'
 let g:mta_filetypes = {
     \ 'html' : 1,
     \ 'xhtml' : 1,
@@ -69,28 +79,25 @@ let g:mta_filetypes = {
     \ 'javascript' : 1,
     \}
 
-Plugin 'alvan/vim-closetag'
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.jsx"
 
-Plugin 'othree/javascript-libraries-syntax.vim'
 let g:used_javascript_libs = 'underscore,jquery'
 
 Bundle 'mxw/vim-jsx'
 
+" Autocomplete
 " make sure to run ~/.vim/bundle/YouCompleteMe/install.py --tern-completer
 " after intitial PluginInstall
-Plugin 'Valloric/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_add_preview_to_completeopt = 0
 "set completeopt-=preview
 "let g:ycm_min_num_of_chars_for_completion = 1
 "let g:ycm_register_as_syntastic_checker = 0
 
-Plugin 'ternjs/tern_for_vim'
 nnoremap <Leader>j :TernDef<CR>
 nnoremap <Leader>J :TernDefSplit<CR>
 
-Plugin 'scrooloose/syntastic'
+" Syntax checker
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -99,28 +106,34 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
-
-Plugin 'Raimondi/delimitMate'
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+" uses global eslintrc
+let g:syntastic_javascript_eslint_exe = 'eslint --no-eslintrc -c ~/.eslintrc'
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+map <leader>e :Errors<cr>
 
 " similar to command p is ST
-Plugin 'ctrlpvim/ctrlp.vim'
 map <leader>gf :CtrlPClearAllCaches<cr> :CtrlP features_wip<cr>
+nnoremap <Leader>k :CtrlPMRU<cr>
 
 " faster searching
-Plugin 'dkprice/vim-easygrep'
 
 " NERDCommenter
 " comment and uncomment with command + /
 let g:NERDCustomDelimiter = { 'javascript': { 'left': '// ', 'leftAlt': '/*', 'rightAlt': '*/' }}
-Plugin 'scrooloose/nerdcommenter'
 nnoremap <D-/> :call NERDComment(0,"toggle")<CR>
 vnoremap <D-/> :call NERDComment(0,"toggle")<CR>
 inoremap <D-/> :call NERDComment(0,"toggle")<CR>
 
-Plugin 'scrooloose/nerdtree'
 nnoremap <C-b> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$']
 
-Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
@@ -143,9 +156,9 @@ set backspace=indent,eol,start
 
 " ignore in search
 let g:ctrlp_max_files = 0
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*,*.pyc
 
-set wildchar=<Tab> wildmenu wildmode=full
+set wildchar=<Tab> wildmenu wildmode=list:longest,full
 
 " better escape
 inoremap jj <Esc>
@@ -170,6 +183,13 @@ command! Tab2 set tabstop=8 softtabstop=0 shiftwidth=2
 " check file change every 4 seconds ('CursorHold') and reload the buffer upon detecting change
 set autoread
 au CursorHold * checktime
+
+" BUFFERS
+nnoremap <leader>vb :vertical sbuffer 
+nnoremap <leader>sb :sbuffer 
+
+" autocomplete colors
+highlight Pmenu guibg=DodgerBlue4
 
 syntax on
 colorscheme monokai

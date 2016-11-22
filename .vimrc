@@ -35,6 +35,7 @@ Plugin 'mhinz/vim-startify'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'tpope/vim-sensible'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'Valloric/MatchTagAlways'
 Plugin 'alvan/vim-closetag'
 Plugin 'othree/javascript-libraries-syntax.vim'
@@ -47,6 +48,11 @@ Plugin 'dkprice/vim-easygrep'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'ruanyl/vim-fixmyjs'
+Plugin 'mileszs/ack.vim'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'ivalkeen/vim-ctrlp-tjump'
+"Plugin 'flowtype/vim-flow'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -74,16 +80,15 @@ let mapleader=" "
 let g:mta_filetypes = {
     \ 'html' : 1,
     \ 'xhtml' : 1,
-    \ 'xml' : 1,
     \ 'jinja' : 1,
     \ 'javascript' : 1,
     \}
 
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.jsx"
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js,*.jsx"
+let g:used_javascript_libs = 'underscore,jquery,ramda,react'
+let g:jsx_ext_required = 0
 
-let g:used_javascript_libs = 'underscore,jquery'
-
-Bundle 'mxw/vim-jsx'
+"Bundle 'mxw/vim-jsx'
 
 " Autocomplete
 " make sure to run ~/.vim/bundle/YouCompleteMe/install.py --tern-completer
@@ -98,6 +103,15 @@ nnoremap <Leader>j :TernDef<CR>
 nnoremap <Leader>J :TernDefSplit<CR>
 
 " Syntax checker
+"function! FindConfig(prefix, what, where)
+    "let cfg = findfile(a:what, escape(a:where, ' ') . ';')
+    "return cfg !=# '' ? ' ' . a:prefix . ' ' . cfg : ''
+"endfunction
+
+"autocmd FileType javascript let b:syntastic_javascript_jscs_args =
+    "\ get(g:, 'syntastic_javascript_jscs_args', '') .
+    "\ FindConfig('-c', '.eslintrc', expand('<amatch>:p:h', 1))
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -111,12 +125,14 @@ let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_warning_symbol = '💩'
 " uses global eslintrc
-let g:syntastic_javascript_eslint_exe = 'eslint --no-eslintrc -c ~/.eslintrc'
+"let g:syntastic_javascript_eslint_exe = 'eslint --no-eslintrc -c ./.eslintrc'
+"let g:syntastic_debug = 1
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
 map <leader>e :Errors<cr>
+nnoremap <leader>l :lnext<cr>
 
 " similar to command p is ST
 map <leader>gf :CtrlPClearAllCaches<cr> :CtrlP features_wip<cr>
@@ -139,6 +155,8 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
+noremap <Leader><Leader>f :Fixmyjs<CR>
+
 " Drew's stuff
 " ------------------------------------------- "
 
@@ -156,12 +174,14 @@ set backspace=indent,eol,start
 
 " ignore in search
 let g:ctrlp_max_files = 0
+let g:ctrlp_show_hidden = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*,*.pyc
 
 set wildchar=<Tab> wildmenu wildmode=list:longest,full
 
 " better escape
 inoremap jj <Esc>
+inoremap jk <Esc>
 
 " movement
 nnoremap <Leader>a :b#<CR>
@@ -190,6 +210,13 @@ nnoremap <leader>sb :sbuffer
 
 " autocomplete colors
 highlight Pmenu guibg=DodgerBlue4
+
+" Ctrl SF find
+nmap <leader>f <Plug>CtrlSFPrompt -ignoredir "public" 
+vmap <leader>f <Plug>CtrlSFVwordPath -ignoredir "public" 
+
+nnoremap <c-]> :CtrlPtjump<cr>
+vnoremap <c-]> :CtrlPtjumpVisual<cr>
 
 syntax on
 colorscheme monokai

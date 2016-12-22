@@ -52,6 +52,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'mileszs/ack.vim'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
+Plugin 'tpope/vim-surround'
 "Plugin 'flowtype/vim-flow'
 
 " All of your Plugins must be added before the following line
@@ -65,6 +66,10 @@ filetype plugin indent on    " required
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+
+" prevents vim from sometimes creating a new file instead of modifying the old
+" one when saving, which can interfere with the webpack file watcher
+set backupcopy=yes
 
 
 " Plugins
@@ -155,8 +160,6 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-noremap <Leader><Leader>f :Fixmyjs<CR>
-
 " Drew's stuff
 " ------------------------------------------- "
 
@@ -212,11 +215,23 @@ nnoremap <leader>sb :sbuffer
 highlight Pmenu guibg=DodgerBlue4
 
 " Ctrl SF find
-nmap <leader>f <Plug>CtrlSFPrompt -ignoredir "public" 
-vmap <leader>f <Plug>CtrlSFVwordPath -ignoredir "public" 
+nmap <Leader>f <Plug>CtrlSFPrompt -ignoredir "public" 
+noremap <Leader>F :CtrlSFToggle<cr>
+vmap <Leader>f <Plug>CtrlSFVwordExec
 
 nnoremap <c-]> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
+
+" Better beginning/end of line movements
+nnoremap H ^
+nnoremap L $
+
+" Respect destination indentation level when pasting
+nnoremap <leader>p p
+nnoremap <leader>P P
+nnoremap p p'[v']=
+nnoremap P P'[v']=
+vnoremap <D-l> >gv
 
 syntax on
 colorscheme monokai

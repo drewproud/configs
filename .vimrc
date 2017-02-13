@@ -131,6 +131,8 @@ let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_warning_symbol = '💩'
 " uses global eslintrc
 "let g:syntastic_javascript_eslint_exe = 'eslint --no-eslintrc -c ./.eslintrc'
+" uses local eslint
+let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 "let g:syntastic_debug = 1
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
@@ -247,4 +249,11 @@ colorscheme monokai
 " :hide -> hides current window
 " :on closes all windows but current
 " <C-i> move to last jump position <C-o> move forward a jump position
+
+" SETUP
+" ------------------------------------------- "
+" npm install -g eslint-cli
+" add .tern-config to ~/
+" compile YouCompleteMe
+" cd ~/.vim/bundle/tern_for_vim && npm i
 

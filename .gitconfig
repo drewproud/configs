@@ -1,0 +1,12 @@
+[alias]
+    st = status
+    ci = commit -v
+    br = branch
+    poh = push origin head
+    co = checkout
+[core]
+	excludesfile = /Users/richardproud/.gitignore_global
+	editor = vim
+[user]
+	name = Drew Proud
+	email = therealdrewproud@gmail.com

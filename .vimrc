@@ -51,9 +51,8 @@ Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'ruanyl/vim-fixmyjs'
 Plugin 'mileszs/ack.vim'
 Plugin 'dyng/ctrlsf.vim'
-Plugin 'ivalkeen/vim-ctrlp-tjump'
+"Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'tpope/vim-surround'
-"Plugin 'flowtype/vim-flow'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -104,8 +103,8 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_min_num_of_chars_for_completion = 1
 "let g:ycm_register_as_syntastic_checker = 0
 
-nnoremap <Leader>j :TernDef<CR>
-nnoremap <Leader>J :TernDefSplit<CR>
+"nnoremap <Leader>j :TernDef<CR>
+"nnoremap <Leader>J :TernDefSplit<CR>
 
 " Syntax checker
 "function! FindConfig(prefix, what, where)
@@ -156,6 +155,7 @@ inoremap <D-/> :call NERDComment(0,"toggle")<CR>
 
 nnoremap <C-b> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeWinSize = 40
 
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
@@ -180,7 +180,7 @@ set backspace=indent,eol,start
 " ignore in search
 let g:ctrlp_max_files = 0
 let g:ctrlp_show_hidden = 1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*,*.pyc
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*,*.pyc,*/rcov/*
 
 set wildchar=<Tab> wildmenu wildmode=list:longest,full
 
@@ -226,7 +226,9 @@ vnoremap <c-]> :CtrlPtjumpVisual<cr>
 
 " Better beginning/end of line movements
 nnoremap H ^
+vnoremap H ^
 nnoremap L $
+vnoremap L $
 
 " Respect destination indentation level when pasting
 nnoremap <leader>p p
@@ -252,6 +254,8 @@ colorscheme monokai
 
 " SETUP
 " ------------------------------------------- "
+" npm install -g import-js
+" clone into ~/.vim/bundle : git@github.com:Galooshi/vim-import-js.git
 " npm install -g eslint-cli
 " add .tern-config to ~/
 " compile YouCompleteMe

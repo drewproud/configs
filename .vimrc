@@ -53,6 +53,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'dyng/ctrlsf.vim'
 "Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'tpope/vim-surround'
+Plugin 'easymotion/vim-easymotion'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -100,11 +101,18 @@ let g:jsx_ext_required = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_add_preview_to_completeopt = 0
 "set completeopt-=preview
-"let g:ycm_min_num_of_chars_for_completion = 1
-"let g:ycm_register_as_syntastic_checker = 0
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_register_as_syntastic_checker = 0
 
-"nnoremap <Leader>j :TernDef<CR>
-"nnoremap <Leader>J :TernDefSplit<CR>
+" Tern mappings
+nnoremap <Leader>d :TernDef<CR>
+nnoremap <Leader>D :TernDefSplit<CR>
+nnoremap <Leader>r :TernRename<CR>
+nnoremap <Leader>R :TernRefs<CR>
+
+"set omnifunc=syntaxcomplete#Complete
+"let g:tern_map_keys=1
+"let g:tern_show_argument_hints="on_hold"
 
 " Syntax checker
 "function! FindConfig(prefix, what, where)
@@ -124,6 +132,7 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'eslint_d'
 let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
@@ -131,14 +140,18 @@ let g:syntastic_style_warning_symbol = '💩'
 " uses global eslintrc
 "let g:syntastic_javascript_eslint_exe = 'eslint --no-eslintrc -c ./.eslintrc'
 " uses local eslint
-let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 "let g:syntastic_debug = 1
+
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
 map <leader>e :Errors<cr>
 nnoremap <leader>l :lnext<cr>
+
+" eslint_d fix
+"nnoremap <leader>f mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
 
 " similar to command p is ST
 map <leader>gf :CtrlPClearAllCaches<cr> :CtrlP features_wip<cr>
@@ -189,7 +202,6 @@ inoremap jj <Esc>
 inoremap jk <Esc>
 
 " movement
-nnoremap <Leader>a :b#<CR>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -254,10 +266,11 @@ colorscheme monokai
 
 " SETUP
 " ------------------------------------------- "
+" npm install -g eslint_d
 " npm install -g import-js
 " clone into ~/.vim/bundle : git@github.com:Galooshi/vim-import-js.git
 " npm install -g eslint-cli
 " add .tern-config to ~/
-" compile YouCompleteMe
+" copy .tern-config to project/.tern-project
+" cd ~/.vim/bundle/YouCompleteMe && ./install.py --tern-completer
 " cd ~/.vim/bundle/tern_for_vim && npm i
-

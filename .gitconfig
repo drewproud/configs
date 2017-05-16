@@ -1,12 +1,29 @@
 [alias]
-    st = status
-    ci = commit -v
-    br = branch
-    poh = push origin head
-    co = checkout
+  st = status
+  ci = commit -v
+  br = branch
+  poh = push origin head --no-verify
+  co = checkout
 [core]
-	excludesfile = /Users/richardproud/.gitignore_global
-	editor = vim
+  excludesfile = /Users/drewproud/.gitignore_global
+  editor = vim
 [user]
-	name = Drew Proud
-	email = therealdrewproud@gmail.com
+  name = Drew Proud
+  email = therealdrewproud@gmail.com
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan

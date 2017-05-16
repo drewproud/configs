@@ -133,15 +133,15 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe = 'eslint_d'
+" uses local eslint
+"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_warning_symbol = '💩'
 " uses global eslintrc
 "let g:syntastic_javascript_eslint_exe = 'eslint --no-eslintrc -c ./.eslintrc'
-" uses local eslint
-"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-"let g:syntastic_debug = 1
+" let g:syntastic_debug = 1
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
@@ -157,7 +157,9 @@ nnoremap <leader>l :lnext<cr>
 map <leader>gf :CtrlPClearAllCaches<cr> :CtrlP features_wip<cr>
 nnoremap <Leader>k :CtrlPMRU<cr>
 
-" faster searching
+" easymotion
+nnoremap f <Plug>(easymotion-w)
+nnoremap F <Plug>(easymotion-b)
 
 " NERDCommenter
 " comment and uncomment with command + /
@@ -167,6 +169,7 @@ vnoremap <D-/> :call NERDComment(0,"toggle")<CR>
 inoremap <D-/> :call NERDComment(0,"toggle")<CR>
 
 nnoremap <C-b> :NERDTreeToggle<CR>
+nnoremap <Leader>n :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 let NERDTreeWinSize = 40
 
@@ -229,7 +232,7 @@ nnoremap <leader>sb :sbuffer
 highlight Pmenu guibg=DodgerBlue4
 
 " Ctrl SF find
-nmap <Leader>f <Plug>CtrlSFPrompt -ignoredir "public" 
+nmap <Leader>f <Plug>CtrlSFPrompt -ignoredir "javascript" 
 noremap <Leader>F :CtrlSFToggle<cr>
 vmap <Leader>f <Plug>CtrlSFVwordExec
 

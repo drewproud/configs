@@ -41,19 +41,20 @@ Plugin 'alvan/vim-closetag'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ternjs/tern_for_vim'
-Plugin 'scrooloose/syntastic'
 Plugin 'Raimondi/delimitMate'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
-"Plugin 'ruanyl/vim-fixmyjs'
 Plugin 'mileszs/ack.vim'
 Plugin 'dyng/ctrlsf.vim'
-"Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'tpope/vim-surround'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'w0rp/ale'
+Plugin 'solarnz/thrift.vim'
+Plugin 'flowtype/vim-flow'
+Plugin 'romainl/vim-qf'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -93,8 +94,6 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js,*.jsx"
 let g:used_javascript_libs = 'underscore,jquery,ramda,react'
 let g:jsx_ext_required = 0
 
-"Bundle 'mxw/vim-jsx'
-
 " Autocomplete
 " make sure to run ~/.vim/bundle/YouCompleteMe/install.py --tern-completer
 " after intitial PluginInstall
@@ -103,12 +102,6 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 "set completeopt-=preview
 let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_register_as_syntastic_checker = 0
-
-" Tern mappings
-nnoremap <Leader>d :TernDef<CR>
-nnoremap <Leader>D :TernDefSplit<CR>
-nnoremap <Leader>r :TernRename<CR>
-nnoremap <Leader>R :TernRefs<CR>
 
 "set omnifunc=syntaxcomplete#Complete
 "let g:tern_map_keys=1
@@ -124,44 +117,100 @@ nnoremap <Leader>R :TernRefs<CR>
     "\ get(g:, 'syntastic_javascript_jscs_args', '') .
     "\ FindConfig('-c', '.eslintrc', expand('<amatch>:p:h', 1))
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe = 'eslint_d'
-" uses local eslint
-"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
+
+" flow
+" ------------------------------------------------
+" Syntax highlighting
+let g:javascript_plugin_flow = 1
+
+"Use locally installed flow
+let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+if matchstr(local_flow, "^\/\\w") == ''
+    let local_flow= getcwd() . "/" . local_flow
+endif
+if executable(local_flow)
+  let g:flow#flowpath = local_flow
+endif
+
+let g:flow#autoclose = 1
+let g:flow#showquickfix = 0 " let ale handle it
+
+nnoremap <Leader>d :FlowJumpToDef<CR>
+" ------------------------------------------------
+
+" ALE and prettier config
+" ------------------------------------------------
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier', 'eslint']
+let g:ale_linters = {}
+let g:ale_linters['javascript'] = ['flow', 'eslint']
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_enter = 1
+let g:ale_set_highlights = 1
+let g:ale_javascript_prettier_options = '--single-quote --no-bracket-spacing --jsx-bracket-same-line --trailing-comma all'
+let g:ale_javascript_eslint_executable = 'eslint_d'
+highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
+highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+let g:ale_statusline_format = ['X %d', '? %d', '']
+let g:ale_echo_msg_format = '%linter% says %s'
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+nnoremap <leader>an :ALENextWrap<cr>
+nnoremap <leader>ap :ALEPreviousWrap<cr>
+" ------------------------------------------------
+
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_eslint_exe = 'eslint_d'
+"" uses local eslint
+""let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+"let g:syntastic_error_symbol = '❌'
+"let g:syntastic_style_error_symbol = '⁉️'
+"let g:syntastic_warning_symbol = '⚠️'
+"let g:syntastic_style_warning_symbol = '💩'
 " uses global eslintrc
 "let g:syntastic_javascript_eslint_exe = 'eslint --no-eslintrc -c ./.eslintrc'
 " let g:syntastic_debug = 1
 
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
-map <leader>e :Errors<cr>
-nnoremap <leader>l :lnext<cr>
+"highlight link SyntasticErrorSign SignColumn
+"highlight link SyntasticWarningSign SignColumn
+"highlight link SyntasticStyleErrorSign SignColumn
+"highlight link SyntasticStyleWarningSign SignColumn
+"map <leader>e :Errors<cr>
+"nnoremap <leader>l :lnext<cr>
 
 " eslint_d fix
 "nnoremap <leader>f mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
 
-" similar to command p is ST
+" CtrlP
+" ------------------------------------------------
 map <leader>gf :CtrlPClearAllCaches<cr> :CtrlP features_wip<cr>
-nnoremap <Leader>k :CtrlPMRU<cr>
+nnoremap <Leader>n :CtrlPMRU<cr>
+" ------------------------------------------------
 
 " easymotion
-nnoremap f <Plug>(easymotion-w)
-nnoremap F <Plug>(easymotion-b)
+" ------------------------------------------------
+"map  / <Plug>(easymotion-sn)
+"omap / <Plug>(easymotion-tn)
+"map  n <Plug>(easymotion-next)
+"map  N <Plug>(easymotion-prev)
+map <Leader>l <Plug>(easymotion-w)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-b)
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motio
+" ------------------------------------------------
 
 " NERDCommenter
+" ------------------------------------------------
 " comment and uncomment with command + /
 let g:NERDCustomDelimiter = { 'javascript': { 'left': '// ', 'leftAlt': '/*', 'rightAlt': '*/' }}
 nnoremap <D-/> :call NERDComment(0,"toggle")<CR>
@@ -169,14 +218,18 @@ vnoremap <D-/> :call NERDComment(0,"toggle")<CR>
 inoremap <D-/> :call NERDComment(0,"toggle")<CR>
 
 nnoremap <C-b> :NERDTreeToggle<CR>
-nnoremap <Leader>n :NERDTreeFind<CR>
+nnoremap <Leader>b :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$']
 let NERDTreeWinSize = 40
+" ------------------------------------------------
 
+" multi cursor
+" ------------------------------------------------
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
+" ------------------------------------------------
 
 " Drew's stuff
 " ------------------------------------------- "
@@ -196,7 +249,8 @@ set backspace=indent,eol,start
 " ignore in search
 let g:ctrlp_max_files = 0
 let g:ctrlp_show_hidden = 1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*,*.pyc,*/rcov/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules*,*/.meteor/*,*/meteor/packages/*,*.pyc,*/rcov/*,*/dist-*
+let g:ctrlsf_ignore_dir = ['bower_components', 'node_modules', 'dist-client', 'dist-server', 'dist-test']
 
 set wildchar=<Tab> wildmenu wildmode=list:longest,full
 
@@ -212,6 +266,9 @@ nnoremap <C-l> <C-w>l
 
 " shift-enter to leave insert mode
 inoremap <S-CR> <Esc>
+
+" QuickFix settings
+nmap ; <Plug>qf_qf_toggle
 
 " tab width
 set expandtab
@@ -254,18 +311,6 @@ vnoremap <D-l> >gv
 
 syntax on
 colorscheme monokai
-
-" Commands
-" ------------------------------------------- "
-" important commands
-" ZZ -> close window
-" ctrl-w, HJKL -> change window focus
-" [:vertical] :sbuffer -> split buffer
-" :b + TAB -> change buffer
-" :bd delete buffer
-" :hide -> hides current window
-" :on closes all windows but current
-" <C-i> move to last jump position <C-o> move forward a jump position
 
 " SETUP
 " ------------------------------------------- "

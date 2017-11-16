@@ -44,9 +44,10 @@ $ cp ~/dev/configs/.tern-config ~/
 $ cd ~/.vim/bundle/tern_for_vim && npm i
 ```
 
-9. Install Ack so CtrlSF works
+9. Install brew dependencies (Ack for CtrlSF and grip for MD preview)
 ```bash
 $ brew install ack
+$ brew install grip
 ```
 
 ## Troubleshooting

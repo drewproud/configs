@@ -54,7 +54,9 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'w0rp/ale'
 Plugin 'solarnz/thrift.vim'
 Plugin 'flowtype/vim-flow'
-Plugin 'romainl/vim-qf'
+"Plugin 'romainl/vim-qf'
+Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'jparise/vim-graphql'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -91,7 +93,7 @@ let g:mta_filetypes = {
     \}
 
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js,*.jsx"
-let g:used_javascript_libs = 'underscore,jquery,ramda,react'
+let g:used_javascript_libs = 'underscore,jquery,ramda,react,lodash'
 let g:jsx_ext_required = 0
 
 " Autocomplete
@@ -100,8 +102,12 @@ let g:jsx_ext_required = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_add_preview_to_completeopt = 0
 "set completeopt-=preview
+let g:ycm_show_diagnostics_ui = 0
 let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_register_as_syntastic_checker = 0
+let g:ycm_filepath_blacklist = {}
+let g:ycm_error_symbol = '❌'
+let g:ycm_warning_symbol = '⚠️'
 
 "set omnifunc=syntaxcomplete#Complete
 "let g:tern_map_keys=1
@@ -196,6 +202,13 @@ map <leader>gf :CtrlPClearAllCaches<cr> :CtrlP features_wip<cr>
 nnoremap <Leader>n :CtrlPMRU<cr>
 " ------------------------------------------------
 
+" Markdown preview
+" ------------------------------------------------
+let vim_markdown_preview_hotkey = '<C-m>'
+let vim_markdown_preview_browser='Google Chrome'
+let vim_markdown_preview_github = 1
+" ------------------------------------------------
+
 " easymotion
 " ------------------------------------------------
 "map  / <Plug>(easymotion-sn)
@@ -268,7 +281,7 @@ nnoremap <C-l> <C-w>l
 inoremap <S-CR> <Esc>
 
 " QuickFix settings
-nmap ; <Plug>qf_qf_toggle
+"nmap ; <Plug>qf_qf_toggle
 
 " tab width
 set expandtab

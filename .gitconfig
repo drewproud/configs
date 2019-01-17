@@ -5,11 +5,11 @@
   poh = push origin head --no-verify
   co = checkout
 [core]
-  excludesfile = /Users/drewproud/.gitignore_global
+  excludesfile = /Users/proud/.gitignore_global
   editor = vim
 [user]
-  name = Drew Proud
-  email = therealdrewproud@gmail.com
+	name = Drew Proud
+	email = proud@uber.com
 [color]
   branch = auto
   diff = auto
@@ -27,3 +27,11 @@
   added = yellow
   changed = green
   untracked = cyan
+[branch]
+	autosetuprebase = always
+[rerere]
+	enabled = true
+[http "https://gopkg.uberinternal.com"]
+	followRedirects = true
+[http "https://gopkg.in"]
+	followRedirects = true

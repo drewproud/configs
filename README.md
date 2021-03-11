@@ -60,6 +60,13 @@ Now you can type to check out files:
 jq -r .scripts package.json
 ```
 
+12. FZF for ctrl-r
+```
+brew install fzf
+$(brew --prefix)/opt/fzf/install
+source ~/.zshrc
+```
+
 ## Troubleshooting
 
 #### `mvim` not finding vim when trying to launch from terminal

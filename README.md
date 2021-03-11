@@ -50,6 +50,16 @@ $ brew install ack
 $ brew install grip
 ```
 
+10. Instal this for checking out files
+```bash
+$ brew install jq
+```
+
+Now you can type to check out files:
+```
+jq -r .scripts package.json
+```
+
 ## Troubleshooting
 
 #### `mvim` not finding vim when trying to launch from terminal

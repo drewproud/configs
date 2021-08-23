@@ -50,7 +50,7 @@ $ brew install ack
 $ brew install grip
 ```
 
-10. Instal this for checking out files
+10. Install this for checking out files
 ```bash
 $ brew install jq
 ```
@@ -60,7 +60,32 @@ Now you can type to check out files:
 jq -r .scripts package.json
 ```
 
-12. FZF for ctrl-r
+Install Iterm2 color theme
+```
+cd Downloads && curl -O https://raw.githubusercontent.com/MartinSeeler/iterm2-material-design/master/material-design-colors.itermcolors
+```
+
+Install Oh My ZSH!
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+Install PowerLevel10k theme
+```
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Change the theme in `~/.zshrc`:
+```
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+
+Open up iTerm2 preferences (⌘ + ,) -> Go to Profiles -> Keys -> Click on + icon (add new Keyboard shortcut):
+![image](https://user-images.githubusercontent.com/4421460/130530332-dc1b5c08-9d04-43ad-b789-799dc8dd0f32.png)
+
+Restart Iterm
+
+FZF for ctrl-r
 ```
 brew install fzf
 $(brew --prefix)/opt/fzf/install
@@ -68,6 +93,8 @@ source ~/.zshrc
 ```
 
 ## Troubleshooting
+
+[Check here for more info on OMZ](https://blog.larsbehrenberg.com/the-definitive-iterm2-and-oh-my-zsh-setup-on-macos)
 
 #### `mvim` not finding vim when trying to launch from terminal
 

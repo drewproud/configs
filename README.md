@@ -92,6 +92,11 @@ $(brew --prefix)/opt/fzf/install
 source ~/.zshrc
 ```
 
+Fix repeating keypresses on Mac
+```
+defaults write -g ApplePressAndHoldEnabled -bool false
+```
+
 ## Troubleshooting
 
 [Check here for more info on OMZ](https://blog.larsbehrenberg.com/the-definitive-iterm2-and-oh-my-zsh-setup-on-macos)

@@ -1,6 +1,8 @@
 # configs
 Configuration files
 
+Check out https://github.com/glacambre/firenvim
+
 ## Installation
 
 1. Install MacVim
